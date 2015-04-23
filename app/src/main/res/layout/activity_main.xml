@@ -10,5 +10,7 @@
         android:layout_height="match_parent"
         android:id="@+id/list"
         android:layout_gravity="center_vertical"
-        android:layout_weight="1" />
+        android:layout_weight="1"
+        android:longClickable="true"
+        android:focusable="false" />
 </LinearLayout>

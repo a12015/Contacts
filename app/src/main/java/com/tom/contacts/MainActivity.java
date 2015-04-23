@@ -5,8 +5,10 @@ import android.database.Cursor;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
+import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
@@ -18,6 +20,7 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         /*
         String[] proj = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
         Cursor c = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
@@ -44,14 +47,14 @@ public class MainActivity extends Activity {
                 ContactsContract.Contacts.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER
         };
-        Cursor c = getContentResolver().query(
-                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+        Cursor c = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 proj,
                 null,
                 null,
                 null
         );
         ListView list = (ListView) findViewById(R.id.list);
+        registerForContextMenu(list);
 //        String[] from = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
         String[] from = {ContactsContract.Contacts.DISPLAY_NAME,
                 ContactsContract.CommonDataKinds.Phone.NUMBER};
@@ -83,6 +86,20 @@ public class MainActivity extends Activity {
         }*/
     }
 
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        if (v.getId()==R.id.list){
+            String[] popups = getResources().getStringArray(R.array.popups);
+            for (String item : popups){
+                menu.add(item);
+            }
+        }
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        return super.onContextItemSelected(item);
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
