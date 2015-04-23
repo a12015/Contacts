@@ -7,6 +7,7 @@ import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CursorAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 
@@ -17,8 +18,9 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        /*
         String[] proj = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
-/*        Cursor c = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
+        Cursor c = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
                 null,
                 ContactsContract.Contacts.STARRED+"=?",
                 new String[]{"1"},
@@ -31,14 +33,28 @@ public class MainActivity extends Activity {
                 null
         );
         Log.d("DD", c.moveToNext()+"");*/
+        /*
         Cursor c = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI,
                 null,
                 null,
                 null,
                 null
+        );*/
+        String[] proj = {ContactsContract.Contacts._ID,
+                ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER
+        };
+        Cursor c = getContentResolver().query(
+                ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
+                proj,
+                null,
+                null,
+                null
         );
         ListView list = (ListView) findViewById(R.id.list);
-        String[] from = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
+//        String[] from = {ContactsContract.Contacts._ID, ContactsContract.Contacts.DISPLAY_NAME};
+        String[] from = {ContactsContract.Contacts.DISPLAY_NAME,
+                ContactsContract.CommonDataKinds.Phone.NUMBER};
         int[] to = {android.R.id.text1, android.R.id.text2};
         SimpleCursorAdapter adapter = new SimpleCursorAdapter(this,
                 android.R.layout.simple_list_item_2,
